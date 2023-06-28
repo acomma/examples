@@ -1,0 +1,19 @@
+duck:
+  datasource:
+    hikari:
+      primary:
+        jdbc-url: jdbc:mysql://localhost:3306/duck-primary?characterEncoding=UTF-8&serverTimezone=GMT%2B8
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+      replica:
+        jdbc-url: jdbc:mysql://localhost:3306/duck-replica?characterEncoding=UTF-8&serverTimezone=GMT%2B8
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 123456
+logging:
+  file:
+    name: ${logging.file.path}/duck-example.log
+    path: /var/log/duck-example
+  level:
+    me.acomma.duck.example.mapper: debug
