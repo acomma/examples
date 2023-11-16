@@ -19,8 +19,12 @@ public class OAuth2ResourceServerConfig {
                 .pathMatchers("/example-user/**").hasAuthority("SCOPE_user")
                 .pathMatchers("/example-product/**").hasAuthority("SCOPE_product")
                 .pathMatchers("/example-order/**").hasAuthority("SCOPE_order")
+                .pathMatchers("/example-auth/**").permitAll()
+                .pathMatchers("/oauth2/authorize").permitAll()
+                .pathMatchers("/login").permitAll()
                 .anyExchange().authenticated());
         http.oauth2ResourceServer(configurer -> configurer.jwt(Customizer.withDefaults()));
+        http.csrf(ServerHttpSecurity.CsrfSpec::disable);
         return http.build();
     }
 }

@@ -3,3 +3,7 @@ server:
 spring:
   application:
     name: example-auth
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
