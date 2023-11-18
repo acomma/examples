@@ -20,10 +20,14 @@ public class OAuth2ResourceServerConfig {
                 .pathMatchers("/example-product/**").hasAuthority("SCOPE_product")
                 .pathMatchers("/example-order/**").hasAuthority("SCOPE_order")
                 .pathMatchers("/example-auth/**").permitAll()
+                // 在默认的授权页面点击 Submit Consent 按钮后请求的地址
                 .pathMatchers("/oauth2/authorize").permitAll()
+                // 在默认的登录页面点击 Sign in 按钮后请求的地址
                 .pathMatchers("/login").permitAll()
                 .anyExchange().authenticated());
         http.oauth2ResourceServer(configurer -> configurer.jwt(Customizer.withDefaults()));
+        // 因为默认的登录页面带有隐藏的 csrf 字段，点击 Sign in 按钮后会一起发送到网关，
+        // 而网关并不认识它，因为它是授权服务返回的
         http.csrf(ServerHttpSecurity.CsrfSpec::disable);
         return http.build();
     }
