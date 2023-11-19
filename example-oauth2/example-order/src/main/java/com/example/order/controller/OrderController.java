@@ -5,6 +5,7 @@ import com.example.common.entity.Product;
 import com.example.common.entity.User;
 import com.example.order.client.ProductClient;
 import com.example.order.client.UserClient;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,8 @@ public class OrderController {
     private final ProductClient productClient;
 
     @GetMapping("/add")
-    public Order add(Integer userId, Integer productId) {
+    public Order add(Integer userId, Integer productId, HttpServletRequest request) {
+        System.out.println("授权用户信息：" + request.getHeader("X-User"));
         User user = userClient.getUser(userId);
         Product product = productClient.getProduct(productId);
 
