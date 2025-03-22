@@ -7,6 +7,7 @@ import com.example.order.client.ProductClient;
 import com.example.order.client.UserClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,9 @@ public class OrderController {
     private final UserClient userClient;
     private final ProductClient productClient;
 
+    @Value("${server.port}")
+    private int port;
+
     @GetMapping("/add")
     public Order add(Integer userId, Integer productId, HttpServletRequest request) {
         System.out.println("授权用户信息：" + request.getHeader("X-User"));
@@ -27,6 +31,7 @@ public class OrderController {
         Order order = new Order();
         order.setUserName(user.getName());
         order.setProductName(product.getName());
+        order.setQuantity(port);
 
         return order;
     }

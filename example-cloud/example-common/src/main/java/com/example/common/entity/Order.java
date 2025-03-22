@@ -7,4 +7,6 @@ public class Order {
     private String userName;
 
     private String productName;
+
+    private int quantity;
 }
