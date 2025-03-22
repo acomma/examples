@@ -18,9 +18,13 @@ public class CustomRequestInterceptor implements RequestInterceptor {
         if (requestAttributes != null) {
             HttpServletRequest request = requestAttributes.getRequest();
             // 在实践中这里可以是已授权的用户信息
-            String header = request.getHeader("X-User");
-            if (header != null) {
-                template.header("X-User", header);
+            String user = request.getHeader("X-User");
+            if (user != null) {
+                template.header("X-User", user);
+            }
+            String canary = request.getHeader("X-Canary");
+            if (canary != null) {
+                template.header("X-Canary", canary);
             }
         }
     }
