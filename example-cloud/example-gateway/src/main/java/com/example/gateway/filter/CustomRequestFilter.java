@@ -39,8 +39,11 @@ public class CustomRequestFilter implements GlobalFilter, Ordered {
 
         return reactiveJwtDecoder.decode(accessToken)
                 .flatMap(jwt -> {
-                    // 放入请求头的可以是从 JWT 中获取的用户信息，这里只是简单的把 Subject 信息放进去
-                    ServerHttpRequest newRequest = exchange.getRequest().mutate().header("X-User", jwt.getSubject()).build();
+                    ServerHttpRequest newRequest = exchange.getRequest().mutate()
+                            // 放入请求头的可以是从 JWT 中获取的用户信息，这里只是简单的把 Subject 信息放进去
+                            .header("X-User", jwt.getSubject())
+                            .header("X-Canary", isCanary(jwt.getSubject()))
+                            .build();
                     ServerWebExchange newExchange = exchange.mutate().request(newRequest).build();
                     return chain.filter(newExchange);
                 })
@@ -49,6 +52,12 @@ public class CustomRequestFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
+        // 如果使用负载均衡，则要保证该过滤器在 ReactiveLoadBalancerClientFilter 之前
         return 0;
+    }
+
+    // 根据用户名判断是否进行灰度
+    private String isCanary(String subject) {
+        return String.valueOf(subject != null && subject.equals("alice"));
     }
 }
