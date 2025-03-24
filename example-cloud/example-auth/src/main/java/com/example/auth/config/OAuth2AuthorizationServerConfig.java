@@ -32,18 +32,27 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
 /**
- * 参考 <a href="https://docs.spring.io/spring-authorization-server/docs/1.1.3/reference/html/getting-started.html#defining-required-components">Defining Required Components</a>。
+ * 参考 <a href="https://docs.spring.io/spring-authorization-server/reference/getting-started.html#defining-required-components">Defining Required Components</a>
+ * 和 1.1.3 版本 <a href="https://docs.spring.io/spring-authorization-server/docs/1.1.3/reference/html/getting-started.html#defining-required-components">Defining Required Components</a>。
  */
 @Configuration(proxyBeanMethods = false)
 public class OAuth2AuthorizationServerConfig {
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-                // Enable OpenID Connect 1.0
-                .oidc(Customizer.withDefaults());
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
+
         http
+                .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
+                .with(authorizationServerConfigurer, (authorizationServer) ->
+                        authorizationServer
+                                // Enable OpenID Connect 1.0
+                                .oidc(Customizer.withDefaults())
+                )
+                .authorizeHttpRequests((authorize) ->
+                        authorize
+                                .anyRequest().authenticated()
+                )
                 // Redirect to the login page when not authenticated from the authorization endpoint
                 .exceptionHandling((exceptions) -> exceptions.defaultAuthenticationEntryPointFor(
                         new LoginUrlAuthenticationEntryPoint("/login"),
@@ -51,6 +60,7 @@ public class OAuth2AuthorizationServerConfig {
                 )
                 // Accept access tokens for User Info and/or Client Registration
                 .oauth2ResourceServer((resourceServer) -> resourceServer.jwt(Customizer.withDefaults()));
+
         return http.build();
     }
 
