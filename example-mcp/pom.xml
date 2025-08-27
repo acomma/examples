@@ -21,6 +21,7 @@
     <modules>
         <module>mcp-server</module>
         <module>mcp-client</module>
+        <module>mcp-gateway</module>
     </modules>
 
     <properties>

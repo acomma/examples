@@ -1,0 +1,27 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: mcp-gateway
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: mcp-gateway
+        version: 1.0.0
+        type: SYNC
+    alibaba:
+      mcp:
+        nacos:
+          namespace: d19a7d83-df25-4abb-bfb8-e227e097f3da
+          server-addr: localhost:8848
+          username: nacos
+          password: 123456
+        gateway:
+          enabled: true
+          registry: nacos
+          nacos:
+            service-names:
+              - mcp-server
+        router:
+          enabled: false
