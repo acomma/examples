@@ -19,3 +19,11 @@ spring:
           password: 123456
           register:
             enabled: true
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        namespace: d19a7d83-df25-4abb-bfb8-e227e097f3da
+        server-addr: localhost:8848
+        username: nacos
+        password: 123456

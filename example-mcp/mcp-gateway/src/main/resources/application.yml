@@ -23,5 +23,6 @@ spring:
           nacos:
             service-names:
               - mcp-server
+              - api-server
         router:
           enabled: false

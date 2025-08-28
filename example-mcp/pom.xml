@@ -6,7 +6,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.5</version>
+        <!-- 参考：https://sca.aliyun.com/docs/2023/overview/version-explain/ -->
+        <version>3.2.12</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -31,6 +32,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-ai.version>1.0.1</spring-ai.version>
         <spring-ai-alibaba.version>1.0.0.3</spring-ai-alibaba.version>
+        <spring-cloud-alibaba.version>2023.0.3.3</spring-cloud-alibaba.version>
+        <nacos-client.version>3.0.2</nacos-client.version>
     </properties>
 
     <dependencyManagement>
@@ -48,6 +51,20 @@
                 <version>${spring-ai-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Spring AI Alibaba 1.0.0.3 使用 Nacos 3.0.2，Spring Cloud Alibaba 使用 Nacos 2.4.2 -->
+            <!-- 替换原因参考：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos-client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
