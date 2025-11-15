@@ -15,26 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud.ai</groupId>
-            <artifactId>spring-ai-alibaba-starter-mcp-registry</artifactId>
-            <!-- 参考：https://github.com/alibaba/spring-ai-alibaba/issues/2148 -->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.ai</groupId>
-                    <artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-mcp-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <artifactId>spring-ai-starter-mcp-server-webflux</artifactId>
         </dependency>
     </dependencies>
 </project>

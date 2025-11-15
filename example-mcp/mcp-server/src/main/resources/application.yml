@@ -7,23 +7,7 @@ spring:
     mcp:
       server:
         enabled: true
+        protocol: STREAMABLE
         name: mcp-server
         version: 1.0.0
-        type: SYNC
-    alibaba:
-      mcp:
-        nacos:
-          namespace: d19a7d83-df25-4abb-bfb8-e227e097f3da
-          server-addr: localhost:8848
-          username: nacos
-          password: 123456
-          register:
-            enabled: true
-  cloud:
-    nacos:
-      discovery:
-        enabled: true
-        namespace: d19a7d83-df25-4abb-bfb8-e227e097f3da
-        server-addr: localhost:8848
-        username: nacos
-        password: 123456
+        type: ASYNC
