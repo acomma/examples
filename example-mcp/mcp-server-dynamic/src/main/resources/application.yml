@@ -1,0 +1,22 @@
+server:
+  port: 9093
+spring:
+  application:
+    name: dynamic-mcp-server
+  ai:
+    mcp:
+      server:
+        dynamic:
+          servers:
+            mcp-server1:
+              enabled: true
+              protocol: SSE
+              version: 1.0.0
+              tool-object-names:
+                - orderService
+            mcp-server2:
+              enabled: true
+              protocol: STREAMABLE
+              version: 1.0.0
+              tool-object-names:
+                - weatherService
